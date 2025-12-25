@@ -7,14 +7,13 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
-
-// Serve frontend files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(cors({
+  origin: "*"
+}));
 
 /*
-  🔐 USERS LIST
-  ➕ Add as many users as you want here
+  🔐 USERS (YOU CONTROL THESE)
+  Add / remove users here
 */
 const users = [
   {
@@ -38,38 +37,36 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: "All fields required" });
+    return res.status(400).json({ message: "Username and password required" });
   }
 
-  // Find user
   const user = users.find(u => u.username === username);
 
   if (!user) {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
-  // Compare password
-  const isValid = await bcrypt.compare(password, user.passwordHash);
+  const match = await bcrypt.compare(password, user.passwordHash);
 
-  if (!isValid) {
+  if (!match) {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
-  // Success
-  res.json({ message: "Login successful ✅" });
+  res.json({ message: "Login successful" });
 });
 
 /*
-  Root → index.html
+  HEALTH CHECK (OPTIONAL BUT USEFUL)
 */
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.send("Backend is running ✅");
 });
 
 /*
-  Start server
+  ⚠️ IMPORTANT FOR RENDER
 */
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`🔐 Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
