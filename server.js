@@ -14,12 +14,12 @@ app.use(cors({ origin: "*" }));
 */
 const users = [
   {
-    username: "Admin",
-    passwordHash: bcrypt.hashSync("Gaurav12510799@", 10)
+    username: "Gaurav",
+    passwordHash: bcrypt.hashSync("Gaurav114451@", 10)
   },
   {
-    username: "Gaurav",
-    passwordHash: bcrypt.hashSync("Gaurav@123", 10)
+    username: "Admin",
+    passwordHash: bcrypt.hashSync("Gaurav120893@", 10)
   }
 ];
 
