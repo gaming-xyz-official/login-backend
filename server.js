@@ -15,7 +15,7 @@ app.use(cors({ origin: "*" }));
 const users = [
   {
     username: "Admin",
-    passwordHash: bcrypt.hashSync("Gaurav2007@", 10)
+    passwordHash: bcrypt.hashSync("Gaurav12510799@", 10)
   },
   {
     username: "Gaurav",
