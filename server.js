@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 
@@ -9,8 +9,7 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 /*
-  🔐 USERS (YOU CONTROL THESE)
-  Add / remove users here
+  USERS (for learning only)
 */
 const users = [
   {
@@ -30,20 +29,27 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: "Username and password required" });
+    return res.status(400).json({
+      message: "Username and password required"
+    });
   }
 
   const user = users.find(u => u.username === username);
+
   if (!user) {
-    return res.status(401).json({ message: "Invalid username or password" });
+    return res.status(401).json({
+      message: "Invalid username or password"
+    });
   }
 
   const match = await bcrypt.compare(password, user.passwordHash);
+
   if (!match) {
-    return res.status(401).json({ message: "Invalid username or password" });
+    return res.status(401).json({
+      message: "Invalid username or password"
+    });
   }
 
-  // ✅ SUCCESS → send token
   res.json({
     message: "Login successful",
     token: "logged_in"
@@ -58,9 +64,10 @@ app.get("/", (req, res) => {
 });
 
 /*
-  ⚠️ REQUIRED FOR RENDER
+  REQUIRED FOR RAILWAY
 */
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port " + PORT);
 });
