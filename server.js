@@ -18,8 +18,8 @@ const users = [
     passwordHash: bcrypt.hashSync("Gaurav114451@", 10)
   },
   {
-    username: "demo",
-    passwordHash: bcrypt.hashSync("demo123@", 10)
+    username: "LPU",
+    passwordHash: bcrypt.hashSync("LPU", 10)
   },
   {
     username: "Admin",
